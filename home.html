@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Welcome to Library System</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="home.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="home.css">
+  <script type="text/javascript">
+        $(document).ready(function(){
+            check();
+        });
+        function check(){
+            // $('#suE').blur(function(){
+            //     var a=$('#suE').val();
+            //     var changUrl="yanzheng.php?Email="+a;
+            //     $.get(changUrl,function(str){
+            //         if(str=='1'){
+            //             document.getElementById("pE").innerHTML=" Email in use!  Use another email!";
+            //         }
+            //         else{
+            //         	document.getElementById("pE").innerHTML="";
+            //         }
+            //     });
+            // });
+
+            $('#suUN').blur(function(){
+                var a=$('#suUN').val();
+                var changUrl="yanzheng.php?Name="+a;
+                $.get(changUrl,function(str){
+                    if(str=='1'){
+                        document.getElementById("pUN").innerHTML=" Username in use!  Use another username!";
+                    }
+                    else{
+                    	document.getElementById("pUN").innerHTML="";
+                    }
+                });
+            });
+        }
+    </script>
+</head>
+<body>
+	
+
+<div class="jumbotron" id="title">
+  <div class="container text-center">
+    <h1 id="th1">Welcome to the Library!</h1>
+    <p id="tp">Enjoy your time with books.</p>
+	<p id="test"><p>
+  </div>
+</div>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav" id="left-nav">
+        <li><a onclick="javascript:loadAll()" id="homeLink" href="#">Home</a></li>
+        <li><a onclick="javascript:loadEntree()"  id="entreeLink" href="#">Literature</a></li>
+        <li><a onclick="javascript:loadSide()"  id="sideLink" href="#">Science</a></li>
+        <li><a onclick="javascript:loadSnack()"  id="snackLink" href="#">Entertainment</a></li>
+		<li><input type="text" name="username" id="txtinput"/></li>
+		<li><a onclick="javascript:searchItem()" href="#" id="searchLink">Search</a></li>
+		
+
+      </ul>
+	  
+	  
+      <ul class="nav navbar-nav navbar-right" id="right-nav">
+        <li id="accountLi"><a href="#"  id="accountLink" onclick="javascript:showLogin()"> <span class="glyphicon glyphicon-user"></span>Your Account</a></li>
+        <li id="signoutLi"></li>
+		<li id="cartLi"><a href="#" id="cartLink" onclick="javascript:showCart()"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="col-sm-12 container" id="fl"> 
+  <div class="row" id="food_list">
+	 
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="logModal" role="dialog">
+    <div class="modal-dialog">
+    
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Log in &nbsp;&nbsp;&nbsp;<span id="logInfo" style="color:#0000ff"></span></h4>
+			</div>
+        
+			<div class="form-group">
+				<label for="username">&nbsp;&nbsp;&nbsp;Username:<span id="plUN" style="color:#ff0000"></span></label>
+				<input type="username" class="form-control" id="loginUN" placeholder="Enter username">
+			</div>
+			
+			<div class="form-group">
+				<label for="pwd">&nbsp;&nbsp;&nbsp;Password:<span id="plPWD" style="color:#ff0000"></span></label>
+				<input type="password" class="form-control" id="loginPWD" placeholder="Enter password">
+			</div>
+			
+			<p>&nbsp;&nbsp;No account?<a href="#"data-dismiss="modal" onclick="javascript:showSU()">Sign up!</a></p>
+			 
+			<button id="cen_btn1" class="btn btn-default"  onclick="javascript:log()">login</button>
+		</div>
+		
+		
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" id="signupModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Sign Up&nbsp;&nbsp;&nbsp;<span id="suInfo" style="color:#0000ff"></span></h4>
+        </div>
+        
+			<div class="form-group">
+				<label for="username">&nbsp;&nbsp;&nbsp;Username:<span id="pUN" style="color:#ff0000"></span></label>
+				<input type="username" class="form-control iteminput" id="suUN" placeholder="Enter username(must longer than 5)">
+			</div>
+			<div class="form-group">
+				<label for="pwd">&nbsp;&nbsp;&nbsp;Password:<span id="pPW" style="color:#ff0000"></span></label>
+				<input type="password" class="form-control iteminput" id="suPWD" placeholder="Enter password(must longer than 8 contain lower-uppercase number and symbol)">
+			</div>
+			<div class="form-group">
+				<label for="pwd">&nbsp;&nbsp;&nbsp;Retype password:<span id="pRP" style="color:#ff0000"></span></label>
+				<input type="password" class="form-control iteminput" id="suRP" placeholder="Retype password">
+			</div>
+			<div class="form-group">
+				<label for="email">&nbsp;&nbsp;&nbsp;Email:<span id="pE" style="color:#ff0000"></span></label>
+				<input type="email" class="form-control iteminput" id="suE" placeholder="Enter email (optional)">
+			</div>
+			<div class="form-group">
+				<label for="phone">&nbsp;&nbsp;&nbsp;Phone:<span id="pP" style="color:#ff0000"></span></label>
+				<input type="number" class="form-control iteminput" id="suP" placeholder="Enter phone number (optional)">
+			</div>
+			<div class="form-group">
+				<label for="address">&nbsp;&nbsp;&nbsp;Address:<span id="pA" style="color:#ff0000"></span></label>
+				<input type="address" class="form-control iteminput" id="suA" placeholder="Enter address (optional)">
+			</div>
+			<button id="cen_btn2" type="submit" class="btn btn-default"  onclick="javascript:signup()">Submit</button>
+		
+      </div>
+      
+    </div>
+</div>
+
+<div class="modal fade" id="cartModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Cart&nbsp;&nbsp;&nbsp;<span id="cartInfo" style="color:#0000ff"></span></h4>
+        </div>
+        <div id="cartItem"></div>
+		<p></p>
+		<button id="cen_btn" class="btn btn-default" onclick="javascript:checkOut()">Check Out</button>
+		
+      </div>
+      
+    </div>
+</div>
+
+
+<div class="modal fade" id="historyModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Custom History</h4>
+        </div>
+        <div id="history">loading...</div>
+		<p></p>
+		<button id="cen_btn" type="submit" class="btn btn-default" data-dismiss="modal">OK</button>
+      </div>
+      
+    </div>
+</div>
+
+<div class="modal fade" id="insertModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Insert a new item&nbsp;&nbsp;&nbsp;<span id="insertInfo" style="color:#0000ff"></span></h4>
+        </div>
+		<div>
+        <label for="name">&nbsp;&nbsp;&nbsp;Item name:<span id="imIN" style="color:#ff0000"></span></label>
+		<input id="inIN" class="iteminput" placeholder="Enter item_name">
+		</div>
+		<div>
+		<label for="name">&nbsp;&nbsp;&nbsp;Picture Link:<span id="imPL" style="color:#ff0000"></span></label>
+		<input id="inPL" class="iteminput" placeholder="Enter pic_link">
+		</div>
+		<div>
+		<label for="name">&nbsp;&nbsp;&nbsp;Item Number:<span id="imIP" style="color:#ff0000"></span></label>
+		<input id="inIP" class="iteminput" type="number" placeholder="Enter number">
+		</div>
+		<div>
+		<label for="name">&nbsp;&nbsp;&nbsp;Category:</label>
+		
+		<select id="cateValue">
+			<option value="Literature">Literature</option>
+			<option value="Science">Science</option>
+			<option value="Entertainment">Entertainment</option>
+		</select>
+		</div>
+		<div>
+		<p></p>
+		<button id="cen_btn" type="submit" class="btn btn-default" onclick="javascript:insertItem()">Create</button>
+		</div>
+      
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="checkinModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Check In a Book:&nbsp;&nbsp;&nbsp;<span id="checkinInfo" style="color:#0000ff"></span></h4>
+        </div>
+		<div>
+        <label for="name">&nbsp;&nbsp;&nbsp;Bookname:<span id="imBN" style="color:#ff0000"></span></label>
+		<input id="inBN" class="iteminput" placeholder="Enter book_name">
+		</div>
+		<div>
+		<label for="name">&nbsp;&nbsp;&nbsp;Username:<span id="imUN" style="color:#ff0000"></span></label>
+		<input id="inUN" class="iteminput" placeholder="Enter username">
+		</div>
+		<div>
+		<label for="name">&nbsp;&nbsp;&nbsp;OrderID:<span id="imOD" style="color:#ff0000"></span></label>
+		<input id="inOD" class="iteminput" type="number" placeholder="Enter OrderID">
+		</div>
+		
+		<p></p>
+		<button id="cen_btn" type="submit" class="btn btn-default" onclick="javascript:checkIn()">Check In</button>
+		</div>
+      
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="editModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Edit</h4>
+			</div>
+			<div>
+				<label for="name">&nbsp;&nbsp;&nbsp;Item name:</label>
+				<input id="edIN" class="iteminput" placeholder="Enter item_name">
+			</div>
+			<div>
+				<label for="name">&nbsp;&nbsp;&nbsp;Picture Link:</label>
+				<input id="edPL" class="iteminput" placeholder="Enter pic_link">
+			</div>
+			<div>
+				<label for="name">&nbsp;&nbsp;&nbsp;Item Number:</label>
+				<input id="edIP" type="number" class="iteminput" placeholder="Enter number">
+			</div>
+			<div>
+				<label for="name">&nbsp;&nbsp;&nbsp;Category:</label>
+				<select id="edCV">
+					<option value="Literature">Literature</option>
+					<option value="Science">Science</option>
+					<option value="Entertainment">Entertainment</option>
+				</select>
+			</div>
+			<div>
+				<p></p>
+				<button id="cen_btn" type="submit" class="btn btn-default" onclick="javascript:editItem()" data-dismiss="modal">Confirm</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="deleteModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title" id="delTitle">Delete this item?</h4>
+			</div>
+			
+			<div>
+				<p></p>
+				<button id="cen_btn" type="submit" class="btn btn-default" onclick="javascript:deleteItem()" data-dismiss="modal">Yes</button>
+				<button id="cen_btn" type="submit" class="btn btn-default"  data-dismiss="modal">No</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="signoutModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title" id="delTitle">Sign out?</h4>
+			</div>
+			
+			<div>
+				<p></p>
+				<button id="cen_btn" type="submit" class="btn btn-default" onclick="javascript:init()" data-dismiss="modal">Yes</button>
+				<button id="cen_btn" type="submit" class="btn btn-default"  data-dismiss="modal">No</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+</body>
+</html>
+
